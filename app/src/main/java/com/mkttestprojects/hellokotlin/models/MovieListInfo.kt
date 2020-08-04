@@ -4,9 +4,8 @@ import com.mkttestprojects.hellokotlin.common.Pageable
 import java.io.Serializable
 import androidx.room.Ignore
 
-class MovieListInfo : Serializable, Pageable {
+class MovieListInfo (): Serializable, Pageable {
 
-    constructor()
 
     @Ignore
     constructor(
@@ -22,7 +21,7 @@ class MovieListInfo : Serializable, Pageable {
         vote_count: Int,
         video: Boolean,
         runtime: Int
-    ) {
+    ) : this(){
         this.poster_path = poster_path
         this.adult = adult
         this.overview = overview

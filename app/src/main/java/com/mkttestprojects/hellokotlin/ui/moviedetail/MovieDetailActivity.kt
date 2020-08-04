@@ -8,8 +8,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
@@ -77,10 +76,7 @@ class MovieDetailActivity : BaseActivity(), View.OnClickListener {
 
     private fun setupSimilarMoviesRecycler() {
         similar_movie_rv.setLayoutManager(
-            StaggeredGridLayoutManager(
-                3,
-                GridLayoutManager.VERTICAL
-            )
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         )
         similar_movie_rv.setAdapter(adapter)
     }

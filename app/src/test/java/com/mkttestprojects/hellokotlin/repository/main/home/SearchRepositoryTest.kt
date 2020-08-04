@@ -69,4 +69,13 @@ class SearchRepositoryTest {
         val returnedData = searchRepository.getSearchResults(eq(eq(anyInt())).toString(), anyInt()).blockingFirst()
 
         Assertions.assertEquals(Resource.error("Error",null),returnedData)    }
+
+    @Test
+    internal fun observeSearchResults_returnError_throwsException() {
+        Mockito.`when`(searchApi.getSearchResults(anyString(), anyString(), anyString(), anyInt()))
+            .thenReturn(Flowable.error(Throwable("Error")))
+
+        val returnedData = searchRepository.getSearchResults(eq(eq(anyInt())).toString(), anyInt()).blockingFirst()
+
+        Assertions.assertEquals("Error",returnedData.message)     }
 }

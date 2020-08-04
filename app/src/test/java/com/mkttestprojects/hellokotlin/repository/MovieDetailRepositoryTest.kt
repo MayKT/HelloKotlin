@@ -7,9 +7,10 @@ import com.mkttestprojects.hellokotlin.models.MovieListModel
 import com.mkttestprojects.hellokotlin.models.base.Resource
 import com.mkttestprojects.hellokotlin.network.MovieDetailApi
 import com.mkttestprojects.hellokotlin.repository.moviedetail.MovieDeatilRepository
+import com.mkttestprojects.hellokotlin.util.AppConstants.API_ERROR
 import com.mkttestprojects.hellokotlin.util.InstantExecutorExtension
 import io.reactivex.Flowable
-import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -41,7 +42,7 @@ class MovieDetailRepositoryTest {
         val returnedValue = movieDetailRepository.getMovieDetailByMovieId(eq(anyInt())).blockingFirst()
 
         //Assert
-        Assertions.assertEquals(Resource.success(detailModel),returnedValue)
+        assertEquals(Resource.success(detailModel),returnedValue)
     }
 
     @Test
@@ -55,9 +56,24 @@ class MovieDetailRepositoryTest {
         val returnedValue = movieDetailRepository.getMovieDetailByMovieId(eq(anyInt())).blockingFirst()
 
         //Assert
-        Assertions.assertEquals(Resource.error("Error",null),returnedValue)
+        assertEquals(Resource.error(API_ERROR,null),returnedValue)
     }
 
+    @Test
+    @Throws(Exception ::class)
+    internal fun observeMovieDetail_returnFailure_throwsError() {
+        // Arrange
+        val detailModel = DetailMovieListModel()
+        Mockito.`when`(movieDetailApi.getMovieDetails(anyInt(), anyString())).thenReturn(
+            Flowable.error(Throwable(API_ERROR))
+        )
+        //Act
+        val returnedValue = movieDetailRepository.getMovieDetailByMovieId(eq(anyInt())).blockingFirst()
+
+        //Assert
+        assertEquals(API_ERROR,returnedValue.message)
+
+    }
 
     @Test
     internal fun observeSimilarMovies_returnSuccess() {
@@ -70,7 +86,7 @@ class MovieDetailRepositoryTest {
         val returnedValue = movieDetailRepository.getSimilarMoviesById(eq(anyInt())).blockingFirst()
 
         //Assert
-        Assertions.assertEquals(Resource.success(movieModel),returnedValue)
+        assertEquals(Resource.success(movieModel),returnedValue)
     }
 
     @Test
@@ -84,5 +100,19 @@ class MovieDetailRepositoryTest {
         val returnedValue = movieDetailRepository.getSimilarMoviesById(eq(anyInt())).blockingFirst()
 
         //Assert
-        Assertions.assertEquals(Resource.error("Error",null),returnedValue)    }
+        assertEquals(Resource.error(API_ERROR,null),returnedValue)    }
+
+    @Test
+    @Throws(Exception ::class)
+    internal fun observeSimilarMovies_returnFailure_throwsException() {
+        val movieListModel = MovieListModel()
+        movieListModel.results = ArrayList<MovieListInfo>()
+        Mockito.`when`(movieDetailApi.getSimilarMoviesById(anyInt(), anyString())).thenReturn(
+            Flowable.error(Throwable(API_ERROR)))
+
+        val returnedValue = movieDetailRepository.getSimilarMoviesById(eq(anyInt())).blockingFirst()
+
+        assertEquals(API_ERROR,returnedValue.message)
+    }
+
 }

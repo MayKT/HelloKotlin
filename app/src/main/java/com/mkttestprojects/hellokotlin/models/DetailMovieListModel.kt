@@ -4,9 +4,7 @@ import androidx.room.Ignore
 import com.mkttestprojects.hellokotlin.common.Pageable
 import java.io.Serializable
 
-class DetailMovieListModel : Serializable,Pageable{
-
-    constructor()
+class DetailMovieListModel() : Serializable,Pageable{
 
     @Ignore
     constructor(
@@ -20,7 +18,7 @@ class DetailMovieListModel : Serializable,Pageable{
         runtime: Int,
         title: String,
         poster_path: String
-    ) {
+    ) : this() {
         this.adult = adult
         this.backdrop_path = backdrop_path
         this.id = id

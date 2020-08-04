@@ -4,12 +4,10 @@ import androidx.room.Ignore
 import com.mkttestprojects.hellokotlin.common.Pageable
 import java.io.Serializable
 
-class MovieListModel : Serializable,Pageable {
-
-    constructor()
+class MovieListModel (): Serializable,Pageable {
 
     @Ignore
-    constructor(page: Int, total_results: Int, total_pages: Int, results: List<MovieListInfo>) {
+    constructor(page: Int, total_results: Int, total_pages: Int, results: List<MovieListInfo>) :this(){
         this.page = page
         this.total_results = total_results
         this.total_pages = total_pages

@@ -13,6 +13,7 @@ public class AppConstants {
     public static final String MM3_FONT = "mm3";
 
     public static final String CONNECTION_OR_SERVER_ERROR = "Connection or server error";
+    public static final String API_ERROR = "Error return from API";
 
 
 }

@@ -6,6 +6,7 @@ import com.mkttestprojects.hellokotlin.models.MovieListModel
 import com.mkttestprojects.hellokotlin.models.base.Resource
 import com.mkttestprojects.hellokotlin.network.MovieDetailApi
 import com.mkttestprojects.hellokotlin.util.AppConstants.DEVELOPER_KEY
+import com.mkttestprojects.hellokotlin.util.AppConstants.API_ERROR
 import io.reactivex.Flowable
 import io.reactivex.functions.Function
 import io.reactivex.schedulers.Schedulers
@@ -27,7 +28,7 @@ class MovieDeatilRepository @Inject constructor(private val movieDetailApi: Movi
             .map {movieListModels : DetailMovieListModel ->
                 if(movieListModels != null){
                     if(movieListModels.id == -1){
-                        return@map Resource.error("Error",DetailMovieListModel())
+                        return@map Resource.error(API_ERROR,DetailMovieListModel())
                     }
                 }
                 return@map Resource.success(movieListModels)
@@ -48,7 +49,7 @@ class MovieDeatilRepository @Inject constructor(private val movieDetailApi: Movi
             .map {
                 if(it != null){
                     if(it.results.isEmpty()){
-                        return@map Resource.error("Error",MovieListModel())
+                        return@map Resource.error(API_ERROR,MovieListModel())
                     }
                 }
                 return@map Resource.success(it)

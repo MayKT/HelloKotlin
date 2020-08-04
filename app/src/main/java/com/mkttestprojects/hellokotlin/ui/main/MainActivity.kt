@@ -46,7 +46,7 @@ class MainActivity : BaseActivity() {
     private fun setupBottomNav() {
 
         val homeItem = AHBottomNavigationItem("Home",R.drawable.ic_home_black_24dp)
-        val item2 = AHBottomNavigationItem("Tab2",R.drawable.ic_home_black_24dp)
+        val item2 = AHBottomNavigationItem("News",R.drawable.ic_news_24)
         val item3 = AHBottomNavigationItem("Tab3",R.drawable.ic_home_black_24dp)
         val profileItem = AHBottomNavigationItem("Profile",R.drawable.ic_account_circle_24)
 
